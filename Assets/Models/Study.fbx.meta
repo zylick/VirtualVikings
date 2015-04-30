@@ -1,0 +1,278 @@
+fileFormatVersion: 2
+guid: 0c43a30550d944a4fbc8ea96f87ab8de
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Bone
+    100004: Ceiling
+    100006: Couch-LP_001
+    100008: Couch-LP_003
+    100010: Door1-Frame-000_001
+    100012: Door1-Frame_000
+    100014: Door1-Frame_001
+    100016: Door1_000
+    100018: Door1_001
+    100020: Door1_002
+    100022: Fireplace
+    100024: FireplaceWall
+    100026: Floor
+    100028: Plane_009
+    100030: //RootNode
+    100032: Table-LP_002
+    100034: WallPanel1_000
+    100036: WallPanel1_001
+    100038: WallPanel1_002
+    100040: WallPanel1_003
+    100042: WallPanel1_004
+    100044: WallPanel1_005
+    100046: WallPanel2_000
+    100048: WallPanel2_001
+    100050: WallPanel2_002
+    100052: WallPanel2_003
+    100054: WallPanel2_004
+    100056: WallPanel2_005
+    400000: Armature
+    400002: Bone
+    400004: Ceiling
+    400006: Couch-LP_001
+    400008: Couch-LP_003
+    400010: Door1-Frame-000_001
+    400012: Door1-Frame_000
+    400014: Door1-Frame_001
+    400016: Door1_000
+    400018: Door1_001
+    400020: Door1_002
+    400022: Fireplace
+    400024: FireplaceWall
+    400026: Floor
+    400028: Plane_009
+    400030: //RootNode
+    400032: Table-LP_002
+    400034: WallPanel1_000
+    400036: WallPanel1_001
+    400038: WallPanel1_002
+    400040: WallPanel1_003
+    400042: WallPanel1_004
+    400044: WallPanel1_005
+    400046: WallPanel2_000
+    400048: WallPanel2_001
+    400050: WallPanel2_002
+    400052: WallPanel2_003
+    400054: WallPanel2_004
+    400056: WallPanel2_005
+    2300000: Ceiling
+    2300002: Couch-LP_001
+    2300004: Couch-LP_003
+    2300006: Door1-Frame-000_001
+    2300008: Door1-Frame_000
+    2300010: Door1-Frame_001
+    2300012: Door1_000
+    2300014: Door1_001
+    2300016: Fireplace
+    2300018: FireplaceWall
+    2300020: Floor
+    2300022: Plane_009
+    2300024: Table-LP_002
+    2300026: WallPanel1_000
+    2300028: WallPanel1_001
+    2300030: WallPanel1_002
+    2300032: WallPanel1_003
+    2300034: WallPanel1_004
+    2300036: WallPanel1_005
+    2300038: WallPanel2_000
+    2300040: WallPanel2_001
+    2300042: WallPanel2_002
+    2300044: WallPanel2_003
+    2300046: WallPanel2_004
+    2300048: WallPanel2_005
+    3300000: Ceiling
+    3300002: Couch-LP_001
+    3300004: Couch-LP_003
+    3300006: Door1-Frame-000_001
+    3300008: Door1-Frame_000
+    3300010: Door1-Frame_001
+    3300012: Door1_000
+    3300014: Door1_001
+    3300016: Fireplace
+    3300018: FireplaceWall
+    3300020: Floor
+    3300022: Plane_009
+    3300024: Table-LP_002
+    3300026: WallPanel1_000
+    3300028: WallPanel1_001
+    3300030: WallPanel1_002
+    3300032: WallPanel1_003
+    3300034: WallPanel1_004
+    3300036: WallPanel1_005
+    3300038: WallPanel2_000
+    3300040: WallPanel2_001
+    3300042: WallPanel2_002
+    3300044: WallPanel2_003
+    3300046: WallPanel2_004
+    3300048: WallPanel2_005
+    4300000: Couch-LP_003
+    4300002: Table-LP_002
+    4300004: Door1_000
+    4300006: Door1_002
+    4300008: Couch-LP_001
+    4300010: Door1-Frame-000_001
+    4300012: WallPanel2_001
+    4300014: WallPanel2_004
+    4300016: WallPanel1_003
+    4300018: WallPanel1_002
+    4300020: Door1-Frame_001
+    4300022: Door1_001
+    4300024: WallPanel2_000
+    4300026: Ceiling
+    4300028: WallPanel2_005
+    4300030: WallPanel1_004
+    4300032: WallPanel1_005
+    4300034: WallPanel1_000
+    4300036: WallPanel1_001
+    4300038: Door1-Frame_000
+    4300040: WallPanel2_002
+    4300042: WallPanel2_003
+    4300044: FireplaceWall
+    4300048: Floor
+    4300050: Fireplace
+    7400000: ArmatureAction_002
+    7400002: OpenDoor
+    9500000: //RootNode
+    13700000: Door1_002
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: OpenDoor
+      takeName: OpenDoor
+      firstFrame: 0
+      lastFrame: 29
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Ceiling
+        weight: 1
+      - path: Couch-LP_001
+        weight: 1
+      - path: Couch-LP_003
+        weight: 1
+      - path: Door1-Frame-000_001
+        weight: 1
+      - path: Door1-Frame_000
+        weight: 1
+      - path: Door1-Frame_001
+        weight: 1
+      - path: Door1_000
+        weight: 1
+      - path: Door1_001
+        weight: 1
+      - path: Door1_002
+        weight: 1
+      - path: Fireplace
+        weight: 1
+      - path: FireplaceWall
+        weight: 1
+      - path: Floor
+        weight: 1
+      - path: Table-LP_002
+        weight: 1
+      - path: WallPanel1_000
+        weight: 1
+      - path: WallPanel1_001
+        weight: 1
+      - path: WallPanel1_002
+        weight: 1
+      - path: WallPanel1_003
+        weight: 1
+      - path: WallPanel1_004
+        weight: 1
+      - path: WallPanel1_005
+        weight: 1
+      - path: WallPanel2_000
+        weight: 1
+      - path: WallPanel2_001
+        weight: 1
+      - path: WallPanel2_002
+        weight: 1
+      - path: WallPanel2_003
+        weight: 1
+      - path: WallPanel2_004
+        weight: 1
+      - path: WallPanel2_005
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
