@@ -72,7 +72,7 @@ public class Crosshair3D : MonoBehaviour
 	void LateUpdate()
 	{
 #if CROSSHAIR_TESTING
-		if (Input.GetButtonDown("Right Shoulder"))
+		if (Input.GetButtonDown("Fire2"))
 		{
 			//*************************
 			// toggle the crosshair mode .. dynamic -> dynamic objects -> fixed depth
@@ -105,6 +105,10 @@ public class Crosshair3D : MonoBehaviour
 			Vector3 cameraForward = cameraController.centerEyeAnchor.forward;
 
 			GetComponent<Renderer>().enabled = true;
+
+			//Setting up the crosshair for 3rd Person
+			//mode = CrosshairMode.DynamicObjects;
+			//crosshairMaterial.color = Color.red;
 
 			//*************************
 			// position the cursor based on the mode
