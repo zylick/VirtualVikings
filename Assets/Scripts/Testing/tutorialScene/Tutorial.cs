@@ -14,8 +14,9 @@ public class Tutorial : MonoBehaviour {
 	public GameObject CenterPosition;
 	public OVRCameraRig mFirstPersonCam;
 	public GameObject mThisGameObject;
+	public TextMesh mTextTimer;
 
-
+	private static float mTimer;
 	private TutorialMode mTutorialMode = TutorialMode.FirstPerson;
 
 	// Use this for initialization
@@ -36,12 +37,20 @@ public class Tutorial : MonoBehaviour {
 		mTutorialMode = TutorialMode.ThirdPerson; //Set the tutorial mode to Third Person
 
 		//Set the timer to the start position
-
+		mTimer = 60.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		//Time.deltaTime; //How much time has passed since the last frame.
+		if( mTimer < 0.0f )
+			mTextTimer.text = "GameOver";
+		else
+		{
+			mTextTimer.text = "Time Remaining: " + Mathf.Floor(mTimer);
+			mTimer -= Time.deltaTime;
+		}
 	}
 
 	private void TouchHandlerCapture( object pSender, System.EventArgs pE)
