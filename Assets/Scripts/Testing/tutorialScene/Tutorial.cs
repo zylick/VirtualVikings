@@ -15,6 +15,7 @@ public class Tutorial : MonoBehaviour {
 	public OVRCameraRig mFirstPersonCam;
 	public GameObject mThisGameObject;
 	public TextMesh mTextTimer;
+	public GameObject mPlayerObject;
 
 	private static float mTimer;
 	private TutorialMode mTutorialMode = TutorialMode.FirstPerson;
@@ -26,6 +27,7 @@ public class Tutorial : MonoBehaviour {
 		mThirdPersonCam.gameObject.SetActive (false); //Set the third person camera to inactive.
 		mFirstPersonCam.gameObject.SetActive (true); //Set the First person camera to active.
 		mTutorialMode = TutorialMode.FirstPerson; //Set the tutorial mode to First Person
+		mPlayerObject.SetActive(false); // Turn the player off since we are going to First Person.
 
 		//Initialize the touchPad for use
 		OVRTouchpad.Create ();
@@ -35,6 +37,7 @@ public class Tutorial : MonoBehaviour {
 		mThirdPersonCam.gameObject.SetActive (true); //Set the third person camera to inactive.
 		mFirstPersonCam.gameObject.SetActive (false); //Set the First person camera to active.
 		mTutorialMode = TutorialMode.ThirdPerson; //Set the tutorial mode to Third Person
+		mPlayerObject.SetActive(true); // Turn the player on since we are going to Third Person.
 
 		//Set the timer to the start position
 		mTimer = 60.0f;
@@ -87,7 +90,8 @@ public class Tutorial : MonoBehaviour {
 			mThirdPersonCam.gameObject.SetActive (true); //Set the third person camera to inactive.
 			mFirstPersonCam.gameObject.SetActive (false); //Set the First person camera to active.
             mTutorialMode = TutorialMode.ThirdPerson; //Set the tutorial mode to Third Person
-			
+			mPlayerObject.SetActive(true); //Turn the player on since we are going to 3rd person.
+
 			break;
 		case OVRTouchpad.TouchEvent.Up:
 			//mThisGameObject.transform.Translate (Vector3.up);
@@ -134,7 +138,8 @@ public class Tutorial : MonoBehaviour {
 			mThirdPersonCam.gameObject.SetActive (false); //Set the third person camera to inactive.
 			mFirstPersonCam.gameObject.SetActive (true); //Set the First person camera to active.
 			mTutorialMode = TutorialMode.FirstPerson; //Set the tutorial mode to First Person
-                
+			mPlayerObject.SetActive(false); // Turn the player off since we are going to First Person.   
+
             break;
 		case OVRTouchpad.TouchEvent.Up:
 			//Means go Left (swipeing toward the top of the device)

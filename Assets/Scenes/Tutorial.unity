@@ -130,7 +130,7 @@ Renderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 1
-  m_LightmapTilingOffset: {x: .100585938, y: .100585938, z: .88671875, w: .1015625}
+  m_LightmapTilingOffset: {x: .100585938, y: .100585938, z: .88671875, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 148a9ee7f320ed6489b2efc34f52ff1e, type: 2}
   m_SubsetIndices: 
@@ -344,8 +344,8 @@ Renderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 1
-  m_LightmapTilingOffset: {x: .100585938, y: .100585938, z: .88671875, w: .203125}
+  m_LightmapIndex: 0
+  m_LightmapTilingOffset: {x: .100585938, y: .100585938, z: .88671875, w: .573242188}
   m_Materials:
   - {fileID: 2100000, guid: 148a9ee7f320ed6489b2efc34f52ff1e, type: 2}
   m_SubsetIndices: 
@@ -5286,6 +5286,26 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 2352012, guid: cdf8ec1293872b54e90693e42daac815, type: 2}
+      propertyPath: m_LightmapTilingOffset.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352014, guid: cdf8ec1293872b54e90693e42daac815, type: 2}
+      propertyPath: m_LightmapIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352014, guid: cdf8ec1293872b54e90693e42daac815, type: 2}
+      propertyPath: m_LightmapTilingOffset.w
+      value: .573242188
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352016, guid: cdf8ec1293872b54e90693e42daac815, type: 2}
+      propertyPath: m_LightmapIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352016, guid: cdf8ec1293872b54e90693e42daac815, type: 2}
+      propertyPath: m_LightmapTilingOffset.z
+      value: .788387299
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cdf8ec1293872b54e90693e42daac815, type: 2}
   m_RootGameObject: {fileID: 592151146}
@@ -8234,6 +8254,7 @@ MonoBehaviour:
   mFirstPersonCam: {fileID: 340350968}
   mThisGameObject: {fileID: 1644365770}
   mTextTimer: {fileID: 485159947}
+  mPlayerObject: {fileID: 1837834974}
 --- !u!1 &1325839715
 GameObject:
   m_ObjectHideFlags: 0
@@ -10163,7 +10184,7 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1644365770}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -11530,6 +11551,7 @@ GameObject:
   - 33: {fileID: 1837834977}
   - 135: {fileID: 1837834976}
   - 23: {fileID: 1837834975}
+  - 114: {fileID: 1837834979}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -11543,13 +11565,13 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1837834974}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 565a7ae85c746d848a7bf42df3a51aa0, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -11583,11 +11605,27 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1837834974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0130000003, y: 1.01999998, z: .00399971008}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1644365774}
   m_RootOrder: 0
+--- !u!114 &1837834979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1837834974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50787aa36b11d2b48849536f1a1637b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mMove: 1
+  mMoveVector: {x: 0, y: 1, z: 0}
+  mMoveRange: .25
+  mMoveSpeed: 10
+  mCube: {fileID: 1644365774}
 --- !u!1 &1838714935
 GameObject:
   m_ObjectHideFlags: 0
@@ -11887,8 +11925,8 @@ Renderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 1
-  m_LightmapTilingOffset: {x: .172851562, y: .172851562, z: -.000675201416, w: .739559174}
+  m_LightmapIndex: 0
+  m_LightmapTilingOffset: {x: .172851562, y: .172851562, z: .788387299, w: .739559174}
   m_Materials:
   - {fileID: 2100000, guid: 2e015971f0bc0474fa03ed91151d4cb3, type: 2}
   - {fileID: 2100000, guid: e5112b75f09b24745af542a7a1ec17ef, type: 2}
