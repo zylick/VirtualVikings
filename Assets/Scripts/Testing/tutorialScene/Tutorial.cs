@@ -15,9 +15,14 @@ public class Tutorial : MonoBehaviour {
 	public OVRCameraRig mFirstPersonCam;
 	public GameObject mThisGameObject;
 	public TextMesh mTextTimer;
+	public TextMesh mFPSCounter;
 	public GameObject mPlayerObject;
 
 	private static float mTimer;
+	private float mTimeLeft;
+	private float mAccumulation;
+	private int mFrames;
+	private float mUpdateInterval;
 	private TutorialMode mTutorialMode = TutorialMode.FirstPerson;
 
 	// Use this for initialization
@@ -41,6 +46,7 @@ public class Tutorial : MonoBehaviour {
 
 		//Set the timer to the start position
 		mTimer = 60.0f;
+		mTimeLeft = mUpdateInterval = 0.5f;
 	}
 	
 	// Update is called once per frame
@@ -54,6 +60,21 @@ public class Tutorial : MonoBehaviour {
 			mTextTimer.text = "Time Remaining: " + Mathf.Floor(mTimer);
 			mTimer -= Time.deltaTime;
 		}
+
+		//Get the current FPS and display it here:
+		mTimeLeft -= Time.deltaTime;
+		mAccumulation += Time.timeScale / Time.deltaTime;
+		++mFrames;
+
+		if (mTimeLeft <= 0.0f) 
+		{
+			//Display float to the second digit
+			mFPSCounter.text = "FPS: " + (mAccumulation/mFrames).ToString("f2");
+			mTimeLeft = mUpdateInterval;
+			mAccumulation = 0.0f;
+			mFrames = 0;
+		}
+
 	}
 
 	private void TouchHandlerCapture( object pSender, System.EventArgs pE)
