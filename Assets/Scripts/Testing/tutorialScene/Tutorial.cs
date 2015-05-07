@@ -13,10 +13,10 @@ public class Tutorial : MonoBehaviour {
 	public OVRCameraRig mThirdPersonCam;
 	public GameObject CenterPosition;
 	public OVRCameraRig mFirstPersonCam;
-	public GameObject mThisGameObject;
 	public TextMesh mTextTimer;
 	public TextMesh mFPSCounter;
 	public GameObject mPlayerObject;
+	public GameObject mPlayerIcon;
 
 	private static float mTimer;
 	private float mTimeLeft;
@@ -75,6 +75,17 @@ public class Tutorial : MonoBehaviour {
 			mFrames = 0;
 		}
 
+		//If we touched our back button in first person we want to switch to third person
+		if (Input.GetMouseButtonDown (1) && mTutorialMode == TutorialMode.FirstPerson ) 
+		{
+			mThirdPersonCam.gameObject.SetActive (true); //Set the third person camera to inactive.
+			mFirstPersonCam.gameObject.SetActive (false); //Set the First person camera to active.
+			mTutorialMode = TutorialMode.ThirdPerson; //Set the tutorial mode to Third Person
+			mPlayerIcon.SetActive(true); //Turn the player on since we are going to 3rd person.
+			Crosshair3D.mode = Crosshair3D.CrosshairMode.Dynamic;
+			Crosshair3D.crosshairMaterial.color = Color.white;
+		}
+
 	}
 
 	private void TouchHandlerCapture( object pSender, System.EventArgs pE)
@@ -103,16 +114,50 @@ public class Tutorial : MonoBehaviour {
 		case OVRTouchpad.TouchEvent.SingleTap:
 			//mThisGameObject.renderer.material.color = new Color(Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f));
 			//swap the player mode.
-			Debug.Log ("FirstPerson Tap");
-			
-			//Cursor on so we can see what we are staring at
-			
-			
-			mThirdPersonCam.gameObject.SetActive (true); //Set the third person camera to inactive.
-			mFirstPersonCam.gameObject.SetActive (false); //Set the First person camera to active.
-            mTutorialMode = TutorialMode.ThirdPerson; //Set the tutorial mode to Third Person
-			mPlayerObject.SetActive(true); //Turn the player on since we are going to 3rd person.
+			//Debug.Log ("FirstPerson Tap");
+			//mFirstPersonCam.centerEyeAnchor.position;
+			//mFirstPersonCam.centerEyeAnchor.forward;
 
+			//Cursor on so we can see what we are staring at
+			//Raycast to see what we are looking at.
+			Ray ray;
+			RaycastHit hit;
+			Vector3 cameraPosition = mFirstPersonCam.centerEyeAnchor.position;
+			Vector3 cameraForward = mFirstPersonCam.centerEyeAnchor.forward;
+			
+			ray = new Ray(cameraPosition, cameraForward);
+			Physics.Raycast(ray, out hit);
+			//Tap to either pick up an item, interact with a door or swap to see what we are looking at.
+			//Debug.Log (hit.collider.gameObject.layer);
+			if(hit.collider.gameObject.layer == 8 && Crosshair3D.mode == Crosshair3D.CrosshairMode.DynamicObjects) //8 is keys
+			{
+				//We touched a key pick it up.
+				hit.transform.gameObject.SetActive(false);
+
+			}
+			else if( hit.collider.gameObject.layer == 9) //9 is doors
+			{
+				//We touched a door see if we can open it
+				//If we have key for door open door else display message that the door is locked?
+				hit.collider.gameObject.SetActive(false);
+			}
+			else
+			{
+				//We want to switch Cursor Mode from seeing where we are looking to check for interaction
+				switch (Crosshair3D.mode)
+				{
+				case Crosshair3D.CrosshairMode.DynamicObjects:
+					Crosshair3D.mode = Crosshair3D.CrosshairMode.Dynamic;
+					Crosshair3D.crosshairMaterial.color = Color.white;
+					break;
+				case Crosshair3D.CrosshairMode.Dynamic:
+					Crosshair3D.mode = Crosshair3D.CrosshairMode.DynamicObjects;
+					Crosshair3D.crosshairMaterial.color = Color.red;
+					break;
+				default:
+					break;
+				}
+			}
 			break;
 		case OVRTouchpad.TouchEvent.Up:
 			//mThisGameObject.transform.Translate (Vector3.up);
@@ -148,37 +193,65 @@ public class Tutorial : MonoBehaviour {
 		forward.y = 0f;
 		forward = forward.normalized; 
 
+
+
 		//transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, Camera.main.transform.localEulerAngles.y, transform.localEulerAngles.z);
 
 		switch (fTouchArguments.TouchType) 
 		{
 		case OVRTouchpad.TouchEvent.SingleTap:
 			//mThisGameObject.renderer.material.color = new Color(Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f),Random.Range(0.0f,1.0f));
-			Debug.Log ("ThirdPerson Tap");
-			//Swap over to First Person
-			mThirdPersonCam.gameObject.SetActive (false); //Set the third person camera to inactive.
-			mFirstPersonCam.gameObject.SetActive (true); //Set the First person camera to active.
-			mTutorialMode = TutorialMode.FirstPerson; //Set the tutorial mode to First Person
-			mPlayerObject.SetActive(false); // Turn the player off since we are going to First Person.   
+			//Debug.Log ("ThirdPerson Tap");
+
+			//If we do not click on the player move him to that location.
+			Ray ray;
+			RaycastHit hit;
+			Vector3 cameraPosition = mThirdPersonCam.centerEyeAnchor.position;
+			Vector3 cameraForward = mThirdPersonCam.centerEyeAnchor.forward;
+
+			ray = new Ray(cameraPosition, cameraForward);
+			Physics.Raycast(ray, out hit);
+
+			//Debug.DrawLine(cameraPosition, hit.point, Color.blue, 30, true);
+			//Debug.Log(hit.point);
+
+			//Debug.Log ( hit.collider.name );
+            if( hit.collider.name != "Player" )
+			{
+				mPlayerObject.transform.position = new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z );
+
+			}
+			//If we click on the player switch it to first person mode
+			else
+			{
+				//Swap over to First Person
+				mThirdPersonCam.gameObject.SetActive (false); //Set the third person camera to inactive.
+				mFirstPersonCam.gameObject.SetActive (true); //Set the First person camera to active.
+				mTutorialMode = TutorialMode.FirstPerson; //Set the tutorial mode to First Person
+				mPlayerIcon.SetActive(false); // Turn the player off since we are going to First Person.  
+
+				//Crosshair3D.mode = Crosshair3D.CrosshairMode.Dynamic;
+				//Crosshair3D.crosshairMaterial.color = Color.white;
+			}
 
             break;
 		case OVRTouchpad.TouchEvent.Up:
 			//Means go Left (swipeing toward the top of the device)
 			Vector3 left = new Vector3(-forward.z, 0.0f, forward.x);
-			mThisGameObject.transform.position += left;
+			mPlayerObject.transform.position += left;
 			break;
 		case OVRTouchpad.TouchEvent.Right:
 			//Means go forward (swipeing toward the front of the device)
-			mThisGameObject.transform.position -= forward;
+			mPlayerObject.transform.position -= forward;
 			break;
 		case OVRTouchpad.TouchEvent.Down:
 			//Means go right (swipeing toward the bottom of the device)
 			Vector3 right = new Vector3(forward.z, 0.0f, -forward.x);
-			mThisGameObject.transform.position += right;
+			mPlayerObject.transform.position += right;
             break;
         case OVRTouchpad.TouchEvent.Left:
 			//Means go backward (swipeing toward the head)
-			mThisGameObject.transform.position += forward;
+			mPlayerObject.transform.position += forward;
 
             break;
 		default:
