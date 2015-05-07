@@ -59,6 +59,8 @@ public class Tutorial : MonoBehaviour {
 		{
 			mTextTimer.text = "Time Remaining: " + Mathf.Floor(mTimer);
 			mTimer -= Time.deltaTime;
+
+
 		}
 
 		//Get the current FPS and display it here:
@@ -218,7 +220,10 @@ public class Tutorial : MonoBehaviour {
 			//Debug.Log ( hit.collider.name );
             if( hit.collider.name != "Player" )
 			{
-				mPlayerObject.transform.position = new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z );
+				//Calculate the time it would take to move the character at a constant pace
+				float mTimeToWalk = Vector3.Distance(mPlayerObject.transform.position, new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z));
+				iTween.MoveTo(mPlayerObject,new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z),mTimeToWalk);
+				//mPlayerObject.transform.position = new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z );
 
 			}
 			//If we click on the player switch it to first person mode

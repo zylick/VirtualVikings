@@ -12,7 +12,7 @@ public class OldFilmEffect : ImageEffectBase {
 		//Set shader uniform values
 		material.SetFloat("SepiaValue", 0.1f);
 		material.SetFloat("NoiseValue", 0.05f);
-		material.SetFloat("ScratchValue", 0.3f);
+		material.SetFloat("ScratchValue", 0.0f);
 		
 		material.SetFloat("InnerVignetting", 1.0f - _vignettingValue);
 		material.SetFloat("OuterVignetting", 1.6f - _vignettingValue);
