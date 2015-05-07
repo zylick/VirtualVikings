@@ -47,6 +47,11 @@ public class Tutorial : MonoBehaviour {
 		//Set the timer to the start position
 		mTimer = 60.0f;
 		mTimeLeft = mUpdateInterval = 0.5f;
+
+		//Initialize my trigger System with the Trigger list
+		TriggerSystem.Create ();
+		TriggerSystem.AddTriggerToList ("redKey", false);
+
 	}
 	
 	// Update is called once per frame
@@ -133,9 +138,13 @@ public class Tutorial : MonoBehaviour {
 			//Debug.Log (hit.collider.gameObject.layer);
 			if(hit.collider.gameObject.layer == 8 && Crosshair3D.mode == Crosshair3D.CrosshairMode.DynamicObjects) //8 is keys
 			{
-				//We touched a key pick it up.
-				hit.transform.gameObject.SetActive(false);
-
+				//Which key was it?
+				if (TriggerSystem.IsTriggerActive(hit.collider.name))
+				{
+					TriggerSystem.SetTriggerInList(hit.collider.name, true);
+					//We touched a key pick it up.
+					hit.transform.gameObject.SetActive(false);
+				}
 			}
 			else if( hit.collider.gameObject.layer == 9) //9 is doors
 			{
