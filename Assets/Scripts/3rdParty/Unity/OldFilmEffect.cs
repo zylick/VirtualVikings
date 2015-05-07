@@ -1,43 +1,21 @@
-﻿/*
-using UnityEngine;
-using System.Collections;
-
-public class OldFilmEffect : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-}
-*/
-using UnityEngine;
+﻿using UnityEngine;
 
 [ExecuteInEditMode]
 [AddComponentMenu("Image Effects/Color Adjustments/Grayscale")]
 public class OldFilmEffect : ImageEffectBase {
 
-	private float _timeLapse;
-	private float _vignettingValue;
-	void Start()
-	{
-		_timeLapse = 0.0f;
-		_vignettingValue = 0.6f;
-		//CreateMaterials ();
-	}
+	private float _timeLapse = 0.0f;
+	private float _vignettingValue = 0.6f;
+
 	// Called by camera to apply image effect
 	void OnRenderImage (RenderTexture source, RenderTexture destination) {
 		//Set shader uniform values
-		material.SetFloat("SepiaValue", 0.3f);
-		material.SetFloat("NoiseValue", 0.3f);
+		material.SetFloat("SepiaValue", 0.1f);
+		material.SetFloat("NoiseValue", 0.05f);
 		material.SetFloat("ScratchValue", 0.3f);
 		
 		material.SetFloat("InnerVignetting", 1.0f - _vignettingValue);
-		material.SetFloat("OuterVignetting", 1.4f - _vignettingValue);
+		material.SetFloat("OuterVignetting", 1.6f - _vignettingValue);
 		
 		var rnd = Random.value;
 		material.SetFloat("RandomValue", rnd);
