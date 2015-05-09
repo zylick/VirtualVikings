@@ -50,7 +50,10 @@ public class Tutorial : MonoBehaviour {
 
 		//Initialize my trigger System with the Trigger list
 		TriggerSystem.Create ();
-		TriggerSystem.AddTriggerToList ("redKey", false);
+		TriggerSystem.AddTriggerToList ("RedKey", false);
+		TriggerSystem.AddTriggerToList ("GreenKey", false);
+		TriggerSystem.AddTriggerToList ("BlueKey", false);
+		TriggerSystem.AddTriggerToList ("BrownKey", false);
 
 	}
 	
@@ -91,6 +94,8 @@ public class Tutorial : MonoBehaviour {
 			mPlayerIcon.SetActive(true); //Turn the player on since we are going to 3rd person.
 			Crosshair3D.mode = Crosshair3D.CrosshairMode.Dynamic;
 			Crosshair3D.crosshairMaterial.color = Color.white;
+
+			mPlayerObject.GetComponent<BoxCollider>().enabled = true;
 		}
 
 	}
@@ -138,12 +143,20 @@ public class Tutorial : MonoBehaviour {
 			//Debug.Log (hit.collider.gameObject.layer);
 			if(hit.collider.gameObject.layer == 8 && Crosshair3D.mode == Crosshair3D.CrosshairMode.DynamicObjects) //8 is keys
 			{
+				//Debug.Log(hit.collider.name);
 				//Which key was it?
-				if (TriggerSystem.IsTriggerActive(hit.collider.name))
+				//Debug.Log (TriggerSystem.IsTriggerPresent(hit.collider.name));
+
+				if (TriggerSystem.IsTriggerPresent(hit.collider.name))
 				{
 					TriggerSystem.SetTriggerInList(hit.collider.name, true);
+
 					//We touched a key pick it up.
 					hit.transform.gameObject.SetActive(false);
+				}
+				else
+				{
+					//Display a message saying that the item in question is not interactive?
 				}
 			}
 			else if( hit.collider.gameObject.layer == 9) //9 is doors
@@ -231,7 +244,10 @@ public class Tutorial : MonoBehaviour {
 			{
 				//Calculate the time it would take to move the character at a constant pace
 				float mTimeToWalk = Vector3.Distance(mPlayerObject.transform.position, new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z));
-				iTween.MoveTo(mPlayerObject,new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z),mTimeToWalk);
+				//iTween.MoveBy(gameObject, iTween.Hash("x", 2, "easeType", "easeInOutExpo", "loopType", "pingPong", "delay", .1));
+				//Debug.Log (mTimeToWalk);
+				iTween.MoveTo (mPlayerObject, iTween.Hash("x",hit.point.x ,"y",mPlayerObject.transform.position.y ,"z",hit.point.z , "easeType", "linear", "time", mTimeToWalk / 3));
+				//iTween.MoveTo(mPlayerObject,new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z),mTimeToWalk);
 				//mPlayerObject.transform.position = new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z );
 
 			}
@@ -243,6 +259,12 @@ public class Tutorial : MonoBehaviour {
 				mFirstPersonCam.gameObject.SetActive (true); //Set the First person camera to active.
 				mTutorialMode = TutorialMode.FirstPerson; //Set the tutorial mode to First Person
 				mPlayerIcon.SetActive(false); // Turn the player off since we are going to First Person.  
+
+				//Make sure to disable the box collider so It doesn't interfere with the cursor
+				mPlayerObject.GetComponent<BoxCollider>().enabled = false;
+
+				//If we have an iTween Running pause it
+				iTween.Stop(mPlayerObject);
 
 				//Crosshair3D.mode = Crosshair3D.CrosshairMode.Dynamic;
 				//Crosshair3D.crosshairMaterial.color = Color.white;

@@ -11588,6 +11588,10 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: .429999948
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 85b94a30aeab64e589d21da6ea578bbe, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85b94a30aeab64e589d21da6ea578bbe, type: 2}
   m_RootGameObject: {fileID: 1983096446}
@@ -12699,7 +12703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1983096447
 Transform:
   m_ObjectHideFlags: 0

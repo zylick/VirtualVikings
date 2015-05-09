@@ -29,14 +29,14 @@ public static class TriggerSystem {
 		}
 	}
 
-	public static bool IsTriggerActive ( string pName )
+	public static bool IsTriggerPresent ( string pName )
 	{
 		foreach (TriggerObject fTO in mTriggerObjects) 
 		{
 			if( pName == fTO.mName )
 			{
 				//We found the trigger object
-				return fTO.mIsTriggered;
+				return true;
 			}
 		}
 		return false;

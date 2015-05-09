@@ -136,6 +136,7 @@ public class Crosshair3D : MonoBehaviour
 				{
 					thisTransform.position = hit.point + (-cameraForward * offsetFromObjects);
 					thisTransform.forward = -cameraForward;
+					//Debug.Log (hit.collider.name);
 				}
 				break;
 			case CrosshairMode.DynamicObjects:
