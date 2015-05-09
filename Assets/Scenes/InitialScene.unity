@@ -582,10 +582,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBeforeLoad: 5
-  sceneToLoad: Tutorial
+  sceneToLoad: GameMode
   mSlide0: {fileID: 1317480075}
   mSlide1: {fileID: 111772398}
-  mSlamAudioSource: {fileID: 1524598209}
 --- !u!1 &1043919788
 GameObject:
   m_ObjectHideFlags: 0
@@ -2011,7 +2010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1524598209
 AudioSource:
   m_ObjectHideFlags: 0
