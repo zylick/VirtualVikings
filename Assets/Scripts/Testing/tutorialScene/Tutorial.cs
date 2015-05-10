@@ -92,8 +92,8 @@ public class Tutorial : MonoBehaviour {
 			mFirstPersonCam.gameObject.SetActive (false); //Set the First person camera to active.
 			mTutorialMode = TutorialMode.ThirdPerson; //Set the tutorial mode to Third Person
 			mPlayerIcon.SetActive(true); //Turn the player on since we are going to 3rd person.
-			Crosshair3D.mode = Crosshair3D.CrosshairMode.Dynamic;
-			Crosshair3D.crosshairMaterial.color = Color.white;
+			//Crosshair3D.mode = Crosshair3D.CrosshairMode.Dynamic;
+			//Crosshair3D.crosshairMaterial.color = Color.white;
 
 			mPlayerObject.GetComponent<BoxCollider>().enabled = true;
 		}
@@ -141,7 +141,8 @@ public class Tutorial : MonoBehaviour {
 			Physics.Raycast(ray, out hit);
 			//Tap to either pick up an item, interact with a door or swap to see what we are looking at.
 			//Debug.Log (hit.collider.gameObject.layer);
-			if(hit.collider.gameObject.layer == 8 && Crosshair3D.mode == Crosshair3D.CrosshairMode.DynamicObjects) //8 is keys
+			//if(hit.collider.gameObject.layer == 8 && Crosshair3D.mode == Crosshair3D.CrosshairMode.DynamicObjects) //8 is keys
+			if(hit.collider.gameObject.layer == 8)
 			{
 				//Debug.Log(hit.collider.name);
 				//Which key was it?
@@ -168,6 +169,7 @@ public class Tutorial : MonoBehaviour {
 			else
 			{
 				//We want to switch Cursor Mode from seeing where we are looking to check for interaction
+				/* Broke this when we repaired GameController.cs
 				switch (Crosshair3D.mode)
 				{
 				case Crosshair3D.CrosshairMode.DynamicObjects:
@@ -181,6 +183,7 @@ public class Tutorial : MonoBehaviour {
 				default:
 					break;
 				}
+				*/
 			}
 			break;
 		case OVRTouchpad.TouchEvent.Up:

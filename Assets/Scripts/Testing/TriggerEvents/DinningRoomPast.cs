@@ -2,19 +2,17 @@
 using System.Collections;
 
 public class DinningRoomPast : MonoBehaviour {
+	public GameObject mSceneController;
+	private bool NotRan = true;
 
-	void OnTriggerEnter( Collider fCollider )
+	void OnTriggerEnter( Collider other )
 	{
-		Debug.Log ("Dinning Room Past: OnTriggerEnter");
-	}
-
-	void OnTriggerStay( Collider fCollider )
-	{
-		Debug.Log ("Dinning Room Past: OnTriggerStay");
-	}
-
-	void OnTriggerExit( Collider fCollider )
-	{
-		Debug.Log ("Dinning Room Past: OnTriggerExit");
+		//Debug.Log ("Dinning Room Past: OnTriggerEnter");
+		if (NotRan) 
+		{
+			//Bring the Player into First Person
+			mSceneController.GetComponent<GameController>().ThirdToPastPerson ("DinningRoom");
+			NotRan = false;
+		}
 	}
 }

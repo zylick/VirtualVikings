@@ -30,14 +30,14 @@ public class Crosshair3D : MonoBehaviour
 		FixedDepth = 2,			// cursor positions itself based on camera forward and draws at a fixed depth
 	}
 
-	public static CrosshairMode				mode = CrosshairMode.Dynamic;
+	public CrosshairMode				mode = CrosshairMode.Dynamic;
 	public int							objectLayer = 8;
 	public float						offsetFromObjects = 0.1f;
 	public float						fixedDepth = 3.0f;
 	public OVRCameraRig					cameraController = null;
 
 	private Transform					thisTransform = null;
-	public static Material					crosshairMaterial = null;
+	public  Material					crosshairMaterial = null;
 
 	/// <summary>
 	/// Initialize the crosshair

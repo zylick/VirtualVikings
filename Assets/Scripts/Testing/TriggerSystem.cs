@@ -41,6 +41,19 @@ public static class TriggerSystem {
 		}
 		return false;
 	}
+	public static bool GetTriggerState ( string pName )
+	{
+		foreach (TriggerObject fTO in mTriggerObjects) 
+		{
+			if( pName == fTO.mName )
+			{
+				//We found the trigger object return its state.
+				return fTO.mIsTriggered;
+			}
+		}
+		//We did not find the trigger object
+		return false;
+	}
 
 	public static void CleanTriggerList()
 	{
