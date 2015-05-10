@@ -585,6 +585,7 @@ MonoBehaviour:
   sceneToLoad: GameMode
   mSlide0: {fileID: 1317480075}
   mSlide1: {fileID: 111772398}
+  mSlamAudioSource: {fileID: 1524598209}
 --- !u!1 &1043919788
 GameObject:
   m_ObjectHideFlags: 0
@@ -2010,7 +2011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1524598209
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2019,7 +2020,7 @@ AudioSource:
   m_GameObject: {fileID: 1524598208}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 78d70176f63855d4a989420f7556537d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 34f0cd822f1b27745a596be21fc2dd81, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

@@ -21,9 +21,9 @@ public class StartupSample : MonoBehaviour
 	public string			sceneToLoad = string.Empty;
 	public GameObject		mSlide0;
 	public GameObject		mSlide1;
-	//public AudioSource 		mSlamAudioSource;
+	public AudioSource 		mSlamAudioSource;
 
-	private float 			mSlideTime = 1.0f;
+	private float 			mSlideTime = 0.5f;
 
 	/// <summary>
 	/// Start a delayed scene load
@@ -48,20 +48,20 @@ public class StartupSample : MonoBehaviour
 		//At this point we can time the crossing the Threshold slide down
 		mSlide0.SetActive (true);
 		iTween.MoveTo (mSlide0, iTween.Hash("x", 0.0f, "y", 3.47f, "z", 9.0f, "easeType", "EaseOutQuart", "time", mSlideTime));
-		//mSlamAudioSource.Play ();
+		mSlamAudioSource.Play ();
 
 		yield return new WaitForSeconds (5);
-		//mSlamAudioSource.Stop ();
+		mSlamAudioSource.Stop ();
 
 		mSlide1.SetActive (true);
-		//mSlamAudioSource.Play ();
+		mSlamAudioSource.Play ();
         iTween.MoveTo (mSlide1, iTween.Hash("x", 0.0f, "y", 3.47f, "z", 8.9f, "easeType", "EaseOutQuart", "time", mSlideTime));
 
        	//iTween.MoveTo (mPlayerObject, iTween.Hash("x",hit.point.x ,"y",mPlayerObject.transform.position.y ,"z",hit.point.z , "easeType", "linear", "time", mTimeToWalk / 3));
 		// this is *ONLY* here for example as our 'main scene' will load too fast
 		// remove this for production builds or set the time to 0.0f
 		yield return new WaitForSeconds(delayBeforeLoad);
-
+		mSlamAudioSource.Stop ();
 		Debug.Log( "[LoadLevel] " + sceneToLoad + " Time: " + Time.time );
 
 		float startTime = Time.realtimeSinceStartup;
