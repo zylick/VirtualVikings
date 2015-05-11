@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
 	public AudioSource mWalkingSound;
 	public AudioSource mOldFilmSound;
 	public AudioSource mPickupItemSound;
+	public AudioSource mBackgroundMusic;
 	public AudioClip   mAngrySpiritClip;
 	public AudioClip   mBroomSweepingClip;
 
@@ -38,7 +39,6 @@ public class GameController : MonoBehaviour
 	public Transform mDinningRoomLocation;
 	public Transform mLibraryRoomLocation;
 	public Transform mMainHallLocation;
-
 
 	private static float mTimer;
 	private float mTimeLeft;
@@ -71,10 +71,10 @@ public class GameController : MonoBehaviour
         
 		//Initialize my trigger System with the Trigger list
 		TriggerSystem.Create ();
-		//TriggerSystem.AddTriggerToList ("GreenKey", false);
-		//TriggerSystem.AddTriggerToList ("BlueKey", false);
-		//TriggerSystem.AddTriggerToList ("BrownKey", false);
-        
+
+		//Turn on background Music if available
+		if(mBackgroundMusic.isPlaying)
+			mBackgroundMusic.Play ();
 	}
 
 	void FixedUpdate ()
@@ -136,7 +136,7 @@ public class GameController : MonoBehaviour
 	{
 		OVRTouchpad.TouchArgs fTouchArguments = (OVRTouchpad.TouchArgs)pE;
 		switch (fTouchArguments.TouchType) {
-		case OVRTouchpad.TouchEvent.SingleTap:               
+		case OVRTouchpad.TouchEvent.SingleTap:
             //Cursor on so we can see what we are staring at
             //Raycast to see what we are looking at.
 			Ray ray;
@@ -286,9 +286,33 @@ public class GameController : MonoBehaviour
 				float mTimeToWalk = Vector3.Distance (mPlayerObject.transform.position, new Vector3 (hit.point.x, mPlayerObject.transform.position.y, hit.point.z));
 				//iTween.MoveBy(gameObject, iTween.Hash("x", 2, "easeType", "easeInOutExpo", "loopType", "pingPong", "delay", .1));
 				//Debug.Log (mTimeToWalk);
-				mTimeToWalk /= 3;
-				iTween.MoveTo (mPlayerObject, iTween.Hash ("x", hit.point.x, "y", mPlayerObject.transform.position.y, "z", hit.point.z, "easeType", "linear", "time", mTimeToWalk));
-					
+
+				//Figure out if we need to go upstairs
+				float fDistance = hit.point.y + mPlayerObject.transform.position.y;
+
+				//Did they click on the floor above or below?
+				if( fDistance > 3 && fDistance < 5)
+				{
+					//I believe he wants to go up stairs or downstairs
+					if( hit.point.y > mPlayerObject.transform.position.y )
+					{
+						//Then it was upstairs
+						iTween.MoveTo (mPlayerObject, iTween.Hash ("path", iTweenPath.GetPath ("UpStairs"), "time", 5));
+					}
+					else
+					{
+						//Then it was downstairs
+						iTween.MoveTo (mPlayerObject, iTween.Hash ("path", iTweenPath.GetPath ("DownStairs"), "time", 5));
+					}
+
+				}
+				else
+				{
+					//Walk to the destination
+					mTimeToWalk /= 3;
+					iTween.MoveTo (mPlayerObject, iTween.Hash ("x", hit.point.x, "y", mPlayerObject.transform.position.y, "z", hit.point.z, "easeType", "linear", "time", mTimeToWalk));
+				}
+
 				//Play the walking sound effect for the timeframe
 				if (!mWalkingSound.isPlaying)
 					StartCoroutine ("PlayWalkSound", mTimeToWalk);
@@ -299,11 +323,9 @@ public class GameController : MonoBehaviour
 					StartCoroutine ("PlayWalkSound", mTimeToWalk);
                 }
 
-
-                    
 				//iTween.MoveTo(mPlayerObject,new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z),mTimeToWalk);
 				//mPlayerObject.transform.position = new Vector3( hit.point.x, mPlayerObject.transform.position.y,hit.point.z );
-                    
+                
 			}
             //If we click on the player switch it to first person mode
             else 
@@ -361,6 +383,9 @@ public class GameController : MonoBehaviour
 			if( mOldFilmSound.isPlaying )
                     mOldFilmSound.Stop ();
 
+
+			if(!mBackgroundMusic.isPlaying)
+				mBackgroundMusic.Play ();
 			break;
 		}
 	}
@@ -404,6 +429,13 @@ public class GameController : MonoBehaviour
 		if (pLocation == "MainHall" && !mMainHallAccess)
 			return;
 		//Debug.Log ("We passed MainHall Requirement");
+
+		//Pause the Background Music
+		if ( mBackgroundMusic.isPlaying ) 
+		{
+			//pause the music
+			mBackgroundMusic.Pause();
+		}
 
         //Swap over to First Person
 		mThirdPersonCam.gameObject.SetActive (false); //Set the third person camera to inactive.
@@ -638,7 +670,27 @@ public class GameController : MonoBehaviour
 		if (TriggerSystem.GetTriggerState ("LibraryRoomPastSoul") && TriggerSystem.GetTriggerState ("DinningRoomPastSoul") && TriggerSystem.GetTriggerState ("MainHallPastSoul") ) 
 		{
 			//Debug.Log("Game has been won!");
+			StartCoroutine(DelayedSceneLoad());
 		}
+	}
+
+	//Helper Walk Function
+	IEnumerator WalkHelper( RaycastHit fHit, float fTime )
+	{
+		//Wait the requested time
+		yield return new WaitForSeconds (fTime);
+
+
+
+	}
+
+	IEnumerator DelayedSceneLoad()
+	{
+		//Play You Win!
+
+		yield return new WaitForSeconds(5.0f);
+		AsyncOperation async = Application.LoadLevelAsync("Credits");
+		yield return async;
 	}
 
 	IEnumerator ShowMessage( string fMessage, float fTime)

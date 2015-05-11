@@ -24,7 +24,7 @@ public class PlayerPositionBounce : MonoBehaviour {
 		if (mMove) 
 		{
 			//Transform the position based on the timeSinceLevelLoad
-			mBounceObject.transform.position = new Vector3 (mCube.position.x, 1, mCube.position.z ) + mMoveVector *
+			mBounceObject.transform.position = new Vector3 (mCube.position.x, mCube.position.y + 1, mCube.position.z ) + mMoveVector *
 				(mMoveRange * Mathf.Sin(Time.timeSinceLevelLoad * mMoveSpeed));
 		}
 	}
