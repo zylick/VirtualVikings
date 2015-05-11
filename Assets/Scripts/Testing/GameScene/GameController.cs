@@ -26,13 +26,18 @@ public class GameController : MonoBehaviour
 	public AudioSource mWalkingSound;
 	public AudioSource mOldFilmSound;
 	public AudioSource mPickupItemSound;
+	public AudioClip   mAngrySpiritClip;
+	public AudioClip   mBroomSweepingClip;
 
 	//Quest Audio Files
 	public AudioSource mDinningRoomSound;
+	public AudioSource mLibraryRoomSound;
+	public AudioSource mMainHallSound;
 
 	//Import Position Transforms
 	public Transform mDinningRoomLocation;
-
+	public Transform mLibraryRoomLocation;
+	public Transform mMainHallLocation;
 
 
 	private static float mTimer;
@@ -43,8 +48,10 @@ public class GameController : MonoBehaviour
 	private GameMode mGameMode = GameMode.FirstPerson;
     
 	//Private Quest Stuff
+	public bool mMainHallAccess = false;
 
 	private uint mCrayonCount = 0;
+	private uint mDustPileCount = 0;
 
 
 	// Use this for initialization
@@ -151,12 +158,29 @@ public class GameController : MonoBehaviour
 	                    
 					if (TriggerSystem.IsTriggerPresent (hit.collider.name)) {
 						TriggerSystem.SetTriggerInList (hit.collider.name, true);
-	                        
+	                    
 						//We touched a something interactible pick it up/use it
 						QuestChecker(hit);
-					} else {
+					}
+					else
+					{
 						//Display a message saying that the item in question is not interactive?
 						//You don't know what to do with that yet.
+
+						//Some quests have other things that happen here:
+						//If you click on DustPiles they cause angryGhostSounds
+						if( hit.collider.name.Contains("Dust"))
+						{
+							AudioSource.PlayClipAtPoint(mAngrySpiritClip, hit.collider.transform.position);
+							//Allow play to hit the Main Hall Trigger now.
+							mMainHallAccess = true;
+							//Debug.Log ("Main Hall Access Enabled");
+						}
+						else if( hit.collider.name.Contains("BookWrong") && TriggerSystem.IsTriggerPresent( "LibraryBookOnGround" ))
+						{
+							AudioSource.PlayClipAtPoint(mAngrySpiritClip, hit.collider.transform.position);
+						}
+
 					}
 				}
 				else if (hit.collider.gameObject.layer == 9) 
@@ -376,7 +400,12 @@ public class GameController : MonoBehaviour
     
 	public void ThirdToPastPerson(string pLocation)
 	{
-		//Swap over to First Person
+		//Do we have any requirements that haven't been met?
+		if (pLocation == "MainHall" && !mMainHallAccess)
+			return;
+		//Debug.Log ("We passed MainHall Requirement");
+
+        //Swap over to First Person
 		mThirdPersonCam.gameObject.SetActive (false); //Set the third person camera to inactive.
 		mFirstPersonCam.gameObject.SetActive (true); //Set the First person camera to active.
 		mGameMode = GameMode.PastPerson; //Set the tutorial mode to First Person
@@ -434,44 +463,44 @@ public class GameController : MonoBehaviour
 
 
 			break;
-		case "MainHallRoom":
+		case "MainHall":
+
 			//Swap the Prefabs from present to past
-
 			//Move the player to the Designated location
-
+			Vector3 fMainHallLocation = new Vector3(mMainHallLocation.position.x, 
+			                                           mPlayerObject.transform.position.y,
+			                                        mMainHallLocation.position.z);
+			mPlayerObject.transform.position = fMainHallLocation;
 			//Play Audio for Dinning Room
-			
+			mMainHallSound.Play ();
+
 			//Set Trigger for Dinning Room
+			TriggerSystem.AddTriggerToList ("Broom", false); //False because it hasn't been aquired yet.
+
+			//EndTrigger for Main Hall
+			//Clean up seven (7) piles of dust to clam the Butler Spirit
+			//TriggerSystem.AddTriggerToList ("MainHallPastSoul", false); //False because it hasn't been aquired yet.
 
 			break;
 		case "LibraryRoom":
 			//Swap the Prefabs from present to past
-			
-			//Move the player to the Designated location
-			
-			//Play Audio for Dinning Room
-			
-			//Set Trigger for Dinning Room
 
-			break;
-		case "LibraryHall":
-			//Swap the Prefabs from present to past
-			
-			//Move the player to the Designated location
-			
-			//Play Audio for Dinning Room
-			
-			//Set Trigger for Dinning Room
+			//Present Messages //Make the writting on the wall appear upstairs.
 
-			break;
-		case "StudyRoom":
-			//Swap the Prefabs from present to past
-			
 			//Move the player to the Designated location
-			
+			Vector3 fLibraryRoomLocation = new Vector3(mLibraryRoomLocation.position.x, 
+			                                        mPlayerObject.transform.position.y,
+			                                           mLibraryRoomLocation.position.z);
+			mPlayerObject.transform.position = fLibraryRoomLocation;
 			//Play Audio for Dinning Room
-			
+			mLibraryRoomSound.Play ();
+
 			//Set Trigger for Dinning Room
+			TriggerSystem.AddTriggerToList ("LibraryBookOnGround", false); //False because it hasn't been aquired yet.
+
+			//EndTrigger for Library Room
+			//Find the one out of place book and put it back into place
+			//TriggerSystem.AddTriggerToList ("LibraryRoomPastSoul", false); //False because it hasn't been aquired yet.
 
 			break;
 		default:
@@ -490,18 +519,23 @@ public class GameController : MonoBehaviour
 		switch (fHitObject.collider.name) 
 		{
 		case "CrayonOne":
+		
 			mCrayonCount++;
 			break;
 		case "CrayonTwo":
+		
 			mCrayonCount++;
 			break;
 		case "CrayonThree":
+		
 			mCrayonCount++;
 			break;
 		case "CrayonFour":
+
 			mCrayonCount++;
 			break;
 		case "CrayonFive":
+
 			mCrayonCount++;
 			break;
 		case "DinningRoomPastSoul":
@@ -509,6 +543,59 @@ public class GameController : MonoBehaviour
 			//Thank you for finding the crayons
 			StartCoroutine(ShowMessage("Crayon Quest", 5.0f));
 			break;
+		case "DustOne":
+			mDustPileCount++;
+			break;
+		case "DustTwo":
+			mDustPileCount++;
+			break;
+		case "DustThree":
+			mDustPileCount++;
+			break;
+		case "DustFour":
+			mDustPileCount++;
+			break;
+		case "DustFive":
+			mDustPileCount++;
+			break;
+		case "DustSix":
+			mDustPileCount++;
+			break;
+		case "DustSeven":
+			mDustPileCount++;
+			break;
+		case "Broom":
+			//If we picked up the broom then we can clean up now
+			TriggerSystem.AddTriggerToList ("DustOne", false); //False because it hasn't been aquired yet.
+			TriggerSystem.AddTriggerToList ("DustTwo", false); //False because it hasn't been aquired yet.
+			TriggerSystem.AddTriggerToList ("DustThree", false); //False because it hasn't been aquired yet.
+			TriggerSystem.AddTriggerToList ("DustFour", false); //False because it hasn't been aquired yet.
+			TriggerSystem.AddTriggerToList ("DustFive", false); //False because it hasn't been aquired yet.
+			TriggerSystem.AddTriggerToList ("DustSix", false); //False because it hasn't been aquired yet.
+			TriggerSystem.AddTriggerToList ("DustSeven", false); //False because it hasn't been aquired yet.
+			break;
+		case "MainHallPastSoul":
+			//We completed a quest
+			//Thank you for Cleaning the MainHall
+			StartCoroutine(ShowMessage("Broom Quest", 5.0f));
+                break;
+           
+		case "LibraryBookOnGround":
+			TriggerSystem.AddTriggerToList ("LibraryShelfForMissingBook", false); //False because it hasn't been aquired yet.
+			break;
+		case "LibraryShelfForMissingBook":
+			//We put the library book back on the shelf we are good to flag for final here
+			TriggerSystem.AddTriggerToList ("LibraryRoomPastSoul", false); //False because it hasn't been aquired yet.
+
+			break;
+		case "LibraryRoomPastSoul":
+			//We completed a quest
+			//Thank you for finding my lost book
+			StartCoroutine(ShowMessage("Book Quest", 5.0f));
+			break;
+		
+		
+
 		default:
 			break;
 		}
@@ -516,6 +603,13 @@ public class GameController : MonoBehaviour
 		//Remove the Object from play as it has already been used.
 		fHitObject.transform.gameObject.SetActive (false);
 
+		if( fHitObject.collider.name.Contains("Dust") )
+		{
+			//We must be cleaning up an spot on the floor
+			//Play Sweeping Sound?
+			AudioSource.PlayClipAtPoint(mBroomSweepingClip, fHitObject.collider.transform.position);
+		}
+		else
 		//Play audio file for picking up an item
 		if( !mPickupItemSound.isPlaying )
 			mPickupItemSound.Play();
@@ -525,14 +619,26 @@ public class GameController : MonoBehaviour
 			mPickupItemSound.Play();
 		}
 
+
 		//Check for Crayon Quest Win Condition (Five Crayons, and not already completed)
-		if (mCrayonCount == 5 && !TriggerSystem.GetTriggerState("DinningRoomPastSoul")) 
+		if (mCrayonCount == 5 && !TriggerSystem.GetTriggerState( "DinningRoomPastSoul" )) 
 		{
-			if( !TriggerSystem.IsTriggerPresent("DinningRoomPastSoul" ) )
-				TriggerSystem.AddTriggerToList ("DinningRoomPastSoul", false); //False because it hasn't been aquired yet.
+			if( !TriggerSystem.IsTriggerPresent( "DinningRoomPastSoul" ))
+				TriggerSystem.AddTriggerToList( "DinningRoomPastSoul", false ); //False because it hasn't been aquired yet.
 		}
 
+		//Check for the Main Hall Quest Win Condition (Seven (7) Dust Piles, and not already completed)
+		if( mDustPileCount == 7 && !TriggerSystem.GetTriggerState( "MainHallPastSoul" ))
+		{
+			if( !TriggerSystem.IsTriggerPresent("MainHallPastSoul" ))
+			   TriggerSystem.AddTriggerToList( "MainHallPastSoul", false ); //False because it hasn't been aquired yet.
+		}
 
+		//Check for Game Win Condition
+		if (TriggerSystem.GetTriggerState ("LibraryRoomPastSoul") && TriggerSystem.GetTriggerState ("DinningRoomPastSoul") && TriggerSystem.GetTriggerState ("MainHallPastSoul") ) 
+		{
+			//Debug.Log("Game has been won!");
+		}
 	}
 
 	IEnumerator ShowMessage( string fMessage, float fTime)
@@ -557,6 +663,29 @@ public class GameController : MonoBehaviour
 		mThirdPersonMessage.text = "";
 
 	}
+
+	/*
+	IEnumerator FinishPastPerson(string fRoom)
+	{
+		//Switch the scene back to regular mode
+
+
+		//Turn off the old film shaders
+		//Enable the shaders on the eyes
+		OldFilmEffect fThisOldFilmEffect = mFirstPersonCam.leftEyeAnchor.GetComponent<OldFilmEffect> ();
+		fThisOldFilmEffect.enabled = false;
+		
+		fThisOldFilmEffect = mFirstPersonCam.rightEyeAnchor.GetComponent<OldFilmEffect> ();
+		fThisOldFilmEffect.enabled = false;
+		
+		//Stop the Projector Audio sound effect if it is still playing
+		if( mOldFilmSound.isPlaying )
+			mOldFilmSound.Stop ();
+
+		//Send them back to first person mode
+		ThirdToFirstPerson();
+	}
+	*/
 
     //Audio Handlers
     IEnumerator PlayWalkSound (float fTime)

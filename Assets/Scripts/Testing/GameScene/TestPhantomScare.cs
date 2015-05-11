@@ -28,6 +28,11 @@ public class TestPhantomScare : MonoBehaviour {
 	void FixedUpdate () {
 
 		//How slow to make it appear (Really slow at first) and then suddenly
+		//float timer += Time.deltaTime;
+
+		//float fMinutes = Mathf.Floor(timer / 60).ToString("00");
+		//float fSeconds = (timer % 60).ToString("00");
+
 		//So make stages Stage One
 		if( mStageOne ) 
 		{
