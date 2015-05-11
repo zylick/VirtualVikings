@@ -40,6 +40,23 @@ public class GameController : MonoBehaviour
 	public Transform mLibraryRoomLocation;
 	public Transform mMainHallLocation;
 
+	//GamePrefabRooms to turn on and off
+	public GameObject mDinningRoomPresentPrefab;
+	public GameObject mDinningRoomPastPrefab;
+	public GameObject mDinningRoomObjects;
+	public GameObject mLibraryRoomPresentPrefab;
+	public GameObject mLibraryRoomPastPrefab;
+	public GameObject mLibraryRoomObjects;
+	public GameObject mMainHallPresentPrefab;
+	public GameObject mMainHallPastPrefab;
+	public GameObject mMainHallObjects;
+
+
+	//Phantom Scare Mechanic
+	public GameObject mPhantomFace;
+	public AudioSource mPhantomScream;
+
+
 	private static float mTimer;
 	private float mTimeLeft;
 	private float mAccumulation;
@@ -49,10 +66,17 @@ public class GameController : MonoBehaviour
     
 	//Private Quest Stuff
 	public bool mMainHallAccess = false;
+	public GameObject mQuestBook;
 
 	private uint mCrayonCount = 0;
 	private uint mDustPileCount = 0;
 
+	//Phantom Scare Mechanic
+	private bool mStageOne 			= true; //Normaly set to true but done with testing for now.
+	private bool mStageTwo 			= false;
+	private bool mStageThree 		= false;
+	private bool mInstaWin 			= false;
+	private bool mTutorialMode 		= true;
 
 	// Use this for initialization
 	void Start ()
@@ -66,7 +90,7 @@ public class GameController : MonoBehaviour
 		OVRTouchpad.TouchHandler += TouchHandlerCapture; //Bind a function here to the events in hte touchpad.
        
 		//Set the timer to the start position
-		mTimer = 60.0f;
+		mTimer = 0.0f;
 		mTimeLeft = mUpdateInterval = 0.5f;
         
 		//Initialize my trigger System with the Trigger list
@@ -75,11 +99,92 @@ public class GameController : MonoBehaviour
 		//Turn on background Music if available
 		if(mBackgroundMusic.isPlaying)
 			mBackgroundMusic.Play ();
+
+		//Hide the Phantom Till its time 
+		Color color = mPhantomFace.renderer.material.color;
+		color.a = 0.0f;
+		mPhantomFace.renderer.material.color = color;
+
+		//Testing Win Condition
+		//mInstaWin = true;
 	}
 
 	void FixedUpdate ()
 	{
+		//When the game starts start the Phantom Timer
+		if( !mTutorialMode )
+			mTimer += Time.deltaTime;
 
+		//Debug.Log ("mTimer: " + mTimer);
+
+		//TestWinCondition
+		if (mInstaWin) 
+		{
+			mInstaWin = false;
+			StartCoroutine (DelayedSceneLoad ());
+		}
+
+		//Stage one at three (3) minutes time
+		if ( mStageOne ) 
+		{
+			//slowly increase the alpha
+			Color color = mPhantomFace.renderer.material.color;
+			color.a += 0.0000005f;
+			mPhantomFace.renderer.material.color = color;
+
+			if( mTimer > 180 ) //180
+			{
+				mStageOne = false;
+				mStageTwo = true;
+			}
+		}
+
+		//Stage two at seven (7) minutes time
+		if (mStageTwo) 
+		{
+			//slowly increase the alpha
+			Color color = mPhantomFace.renderer.material.color;
+			color.a += 0.0000005f;
+			mPhantomFace.renderer.material.color = color;
+
+			if( mTimer > 420 ) //420
+			{
+				mStageTwo = false;
+				mStageThree = true;
+			}
+		}
+
+		//Stage three at ten (10) minutes time
+		if( mStageThree )
+		{
+			//slowly increase the alpha
+			Color color = mPhantomFace.renderer.material.color;
+			color.a += 0.0000005f;
+			mPhantomFace.renderer.material.color = color;
+
+			if( mTimer > 600 ) //600
+			{
+				//Finish
+				mStageThree = false;
+
+				if(mBackgroundMusic.isPlaying)
+					mBackgroundMusic.Stop ();
+
+				//Force the player into first person
+				if( mGameMode != GameMode.FirstPerson )
+					ThirdToFirstPerson();
+				
+				//Play scream
+				mPhantomScream.Play ();
+				
+				//Set the Alpha to Max
+				color.a = 0.70f;
+				mPhantomFace.renderer.material.color = color;
+				
+				//Start our countdown to clear and show message
+				StartCoroutine(GameOver());
+			}
+		}
 	}
     
 	// Update is called once per frame
@@ -176,7 +281,7 @@ public class GameController : MonoBehaviour
 							mMainHallAccess = true;
 							//Debug.Log ("Main Hall Access Enabled");
 						}
-						else if( hit.collider.name.Contains("BookWrong") && TriggerSystem.IsTriggerPresent( "LibraryBookOnGround" ))
+						else if( hit.collider.name.Contains("books") && TriggerSystem.IsTriggerPresent( "LibraryBookOnGround" ))
 						{
 							AudioSource.PlayClipAtPoint(mAngrySpiritClip, hit.collider.transform.position);
 						}
@@ -291,18 +396,26 @@ public class GameController : MonoBehaviour
 				float fDistance = hit.point.y + mPlayerObject.transform.position.y;
 
 				//Did they click on the floor above or below?
-				if( fDistance > 3 && fDistance < 5)
+				if( fDistance > 5 && fDistance < 7)
 				{
 					//I believe he wants to go up stairs or downstairs
 					if( hit.point.y > mPlayerObject.transform.position.y )
 					{
 						//Then it was upstairs
 						iTween.MoveTo (mPlayerObject, iTween.Hash ("path", iTweenPath.GetPath ("UpStairs"), "time", 5));
+						mTimeToWalk = 5.0f;
+						//Adjust the ThirdPerson Camera so its easier to see upstairs
+						Vector3 fCameraUpstairsPosition = new Vector3(-7.0f, 8.3f, -1.54f);
+						mThirdPersonCam.transform.position = fCameraUpstairsPosition;
 					}
 					else
 					{
 						//Then it was downstairs
 						iTween.MoveTo (mPlayerObject, iTween.Hash ("path", iTweenPath.GetPath ("DownStairs"), "time", 5));
+						mTimeToWalk = 5.0f;
+						//Adjust the ThirdPerson Camera so its easier to see downstairs
+						Vector3 fCameraDownstairsPosition = new Vector3(0.0f, 8.3f, -8.0f);
+						mThirdPersonCam.transform.position = fCameraDownstairsPosition;
 					}
 
 				}
@@ -369,7 +482,30 @@ public class GameController : MonoBehaviour
 			ThirdToFirstPerson();
 
             //Switch the scene back to regular mode
+			//Check all three past prefabs to see if one is active
+			//Dinning Room
+			if( mDinningRoomPastPrefab.activeSelf )
+			{
+				mDinningRoomPastPrefab.SetActive (false);
+				mDinningRoomPresentPrefab.SetActive(true);
+				mDinningRoomObjects.SetActive(true);
+			}
 
+			//MainHall
+			if(mMainHallPastPrefab.activeSelf )
+			{
+				mMainHallPastPrefab.SetActive (false);
+				mMainHallPresentPrefab.SetActive(true);
+				mMainHallObjects.SetActive(true);
+			}
+
+			//Library Room
+			if(mLibraryRoomPastPrefab.activeSelf )
+			{
+				mLibraryRoomPastPrefab.SetActive(false);
+				mLibraryRoomPresentPrefab.SetActive(true);
+				mLibraryRoomObjects.SetActive(true);
+			}
 
             //Turn off the old film shaders
 			//Enable the shaders on the eyes
@@ -467,7 +603,9 @@ public class GameController : MonoBehaviour
 		{
 		case "DinningRoom":
 			//Swap the Prefabs from present to past
-
+			mDinningRoomPastPrefab.SetActive(true);
+			mDinningRoomPresentPrefab.SetActive(false);
+			mDinningRoomObjects.SetActive(false);
 
 			//Move the player to the Designated location
 			Vector3 fDinningRoomLocation = new Vector3(mDinningRoomLocation.position.x, 
@@ -498,6 +636,10 @@ public class GameController : MonoBehaviour
 		case "MainHall":
 
 			//Swap the Prefabs from present to past
+			mMainHallPastPrefab.SetActive(true);
+			mMainHallPresentPrefab.SetActive(false);
+			mMainHallObjects.SetActive(false);
+
 			//Move the player to the Designated location
 			Vector3 fMainHallLocation = new Vector3(mMainHallLocation.position.x, 
 			                                           mPlayerObject.transform.position.y,
@@ -516,6 +658,9 @@ public class GameController : MonoBehaviour
 			break;
 		case "LibraryRoom":
 			//Swap the Prefabs from present to past
+			mLibraryRoomPastPrefab.SetActive(true);
+			mLibraryRoomPresentPrefab.SetActive(false);
+			mLibraryRoomObjects.SetActive(false);
 
 			//Present Messages //Make the writting on the wall appear upstairs.
 
@@ -632,8 +777,17 @@ public class GameController : MonoBehaviour
 			break;
 		}
 
-		//Remove the Object from play as it has already been used.
-		fHitObject.transform.gameObject.SetActive (false);
+		//Add Book to pedistal if its the book quest
+		if (fHitObject.collider.name == "LibraryShelfForMissingBook") 
+		{
+			mQuestBook.SetActive(true);
+		}
+		else 
+		{
+			//Remove the Object from play as it has already been used.
+			fHitObject.transform.gameObject.SetActive (false);
+		}
+
 
 		if( fHitObject.collider.name.Contains("Dust") )
 		{
@@ -679,14 +833,24 @@ public class GameController : MonoBehaviour
 	{
 		//Wait the requested time
 		yield return new WaitForSeconds (fTime);
-
-
-
 	}
 
 	IEnumerator DelayedSceneLoad()
 	{
 		//Play You Win!
+		//Show Score
+		yield return new WaitForSeconds(5.0f);
+		StopCoroutine("ShowMessage");
+		int fCalculateScore = 419 - Mathf.FloorToInt (mTimer);
+		string fString = "You Win Score(" + fCalculateScore + ")";
+
+		//Turn on text to put the message
+		mFirstPersonMessage.gameObject.SetActive (true);
+		mThirdPersonMessage.gameObject.SetActive (true);
+		
+		//Put the message in the text
+		mFirstPersonMessage.text = fString;
+		mThirdPersonMessage.text = fString;
 
 		yield return new WaitForSeconds(5.0f);
 		AsyncOperation async = Application.LoadLevelAsync("Credits");
@@ -738,6 +902,31 @@ public class GameController : MonoBehaviour
 		ThirdToFirstPerson();
 	}
 	*/
+
+	//If you lose
+	IEnumerator GameOver()
+	{
+		//Shake the face
+		iTween.ShakePosition (mPhantomFace, new Vector3(0.10f, 0.10f, 0.10f), 6.0f);
+		//iTween.ShakePosition(mPhantomFace, iTween.Hash("amout", new Vector3(0,0.1f,0), "time", 3.0f));
+		
+		//Wait for two seconds so sound can finish playing.
+		yield return new WaitForSeconds (7);
+		//Stop scream
+		mPhantomScream.Stop ();
+		
+		//Hide Face again
+		Color color = mPhantomFace.renderer.material.color;
+		color.a = 0.0f;
+		mPhantomFace.renderer.material.color = color;
+		
+		//Update text message
+		StartCoroutine(ShowMessage("Game Over (Resetting)", 5.0f));
+	
+		yield return new WaitForSeconds(5.0f);
+		AsyncOperation async = Application.LoadLevelAsync("GameMode");
+		yield return async;
+	}
 
     //Audio Handlers
     IEnumerator PlayWalkSound (float fTime)

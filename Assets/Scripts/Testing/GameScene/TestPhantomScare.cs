@@ -79,7 +79,7 @@ public class TestPhantomScare : MonoBehaviour {
 
 			//Set the Alpha to Max
 			Color color = mPhantomFace.renderer.material.color;
-			color.a = 1.0f;
+			color.a = 0.70f;
 			mPhantomFace.renderer.material.color = color;
 
 			//Start our countdown to clear and show message

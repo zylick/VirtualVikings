@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Fireplace
-  m_Shader: {fileID: 4, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10703, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,32 +17,21 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 75214a3a4fafc2d47977edf87b8aedad, type: 3}
+          m_Texture: {fileID: 2800000, guid: 6ca8fa93bc1f4ed4d95816288ba3cbff, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 2800000, guid: 3445171972d8d1d4b812b994b695956f, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ParallaxMap
-        second:
-          m_Texture: {fileID: 2800000, guid: 4c8b5a57d6c47d144b982b4e0c005e61, type: 3}
+          m_Texture: {fileID: 2800000, guid: 389f349c95c3b244d86bc6bcc1105a4b, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
           name: _Shininess
-        second: .078125
-      data:
-        first:
-          name: _Parallax
-        second: .00499999989
+        second: .370686889
     m_Colors:
       data:
         first:
