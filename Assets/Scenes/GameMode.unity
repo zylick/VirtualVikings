@@ -9615,7 +9615,7 @@ Light:
     m_Bits: 4294967295
   m_Lightmapping: 2
   m_ShadowSamples: 10
-  m_ShadowRadius: .100000001
+  m_ShadowRadius: 1.20000005
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
@@ -14385,6 +14385,31 @@ Prefab:
       propertyPath: m_BackGroundColor.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 10212654, guid: c53256ce1b8ea774f8f6a46271778ec6, type: 2}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 4f13db9f7efb8724093652314681f31c,
+        type: 3}
+    - target: {fileID: 2312654, guid: c53256ce1b8ea774f8f6a46271778ec6, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4f13db9f7efb8724093652314681f31c, type: 3}
+    - target: {fileID: 10212654, guid: c53256ce1b8ea774f8f6a46271778ec6, type: 2}
+      propertyPath: m_Color.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 412652, guid: c53256ce1b8ea774f8f6a46271778ec6, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10212654, guid: c53256ce1b8ea774f8f6a46271778ec6, type: 2}
+      propertyPath: m_OffsetZ
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 10212654, guid: c53256ce1b8ea774f8f6a46271778ec6, type: 2}
+      propertyPath: m_CharacterSize
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c53256ce1b8ea774f8f6a46271778ec6, type: 2}
   m_RootGameObject: {fileID: 1130786066}
@@ -16292,6 +16317,22 @@ Prefab:
     - target: {fileID: 2329452, guid: 3dcccd2a40b50d94f9f2dae11a980a30, type: 2}
       propertyPath: m_LightmapTilingOffset.w
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10829504, guid: 3dcccd2a40b50d94f9f2dae11a980a30, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10829500, guid: 3dcccd2a40b50d94f9f2dae11a980a30, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10829502, guid: 3dcccd2a40b50d94f9f2dae11a980a30, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10829498, guid: 3dcccd2a40b50d94f9f2dae11a980a30, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3dcccd2a40b50d94f9f2dae11a980a30, type: 2}
@@ -20981,6 +21022,22 @@ Prefab:
       propertyPath: m_LightmapTilingOffset.w
       value: .982391357
       objectReference: {fileID: 0}
+    - target: {fileID: 10817406, guid: 6f32312b222d8d64581931d1b445dff8, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10817404, guid: 6f32312b222d8d64581931d1b445dff8, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10817402, guid: 6f32312b222d8d64581931d1b445dff8, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10817408, guid: 6f32312b222d8d64581931d1b445dff8, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6f32312b222d8d64581931d1b445dff8, type: 2}
   m_RootGameObject: {fileID: 1285669019}
@@ -21739,7 +21796,7 @@ Light:
     m_Bits: 4294967295
   m_Lightmapping: 2
   m_ShadowSamples: 10
-  m_ShadowRadius: .100000001
+  m_ShadowRadius: 1.20000005
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
@@ -22246,8 +22303,8 @@ TextMesh:
   m_PrefabInternal: {fileID: 651184635}
   m_GameObject: {fileID: 813708897}
   m_Text: 'Time Remaining: 00:55'
-  m_OffsetZ: 0
-  m_CharacterSize: 1
+  m_OffsetZ: 60
+  m_CharacterSize: 2
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 0
@@ -22255,10 +22312,10 @@ TextMesh:
   m_FontSize: 64
   m_FontStyle: 1
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 4f13db9f7efb8724093652314681f31c, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278241247
+    rgba: 4294967295
 --- !u!23 &813708900
 Renderer:
   m_ObjectHideFlags: 0
@@ -22272,7 +22329,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4f13db9f7efb8724093652314681f31c, type: 3}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -25058,6 +25115,30 @@ Prefab:
     - target: {fileID: 2350608, guid: 2494203bf5f095941a2c42e6e486760b, type: 2}
       propertyPath: m_LightmapIndex
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 10850614, guid: 2494203bf5f095941a2c42e6e486760b, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10850618, guid: 2494203bf5f095941a2c42e6e486760b, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10850612, guid: 2494203bf5f095941a2c42e6e486760b, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10850620, guid: 2494203bf5f095941a2c42e6e486760b, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10850616, guid: 2494203bf5f095941a2c42e6e486760b, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10850622, guid: 2494203bf5f095941a2c42e6e486760b, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2494203bf5f095941a2c42e6e486760b, type: 2}
@@ -39483,6 +39564,30 @@ Prefab:
       propertyPath: m_LightmapTilingOffset.w
       value: .949493408
       objectReference: {fileID: 0}
+    - target: {fileID: 10816856, guid: 23b3e3545bbc8224697287447f1436fc, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10816852, guid: 23b3e3545bbc8224697287447f1436fc, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10816846, guid: 23b3e3545bbc8224697287447f1436fc, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10816848, guid: 23b3e3545bbc8224697287447f1436fc, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10816850, guid: 23b3e3545bbc8224697287447f1436fc, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 10816854, guid: 23b3e3545bbc8224697287447f1436fc, type: 2}
+      propertyPath: m_ShadowRadius
+      value: 1.20000005
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 23b3e3545bbc8224697287447f1436fc, type: 2}
   m_RootGameObject: {fileID: 1615820796}
@@ -41235,7 +41340,7 @@ Light:
     m_Bits: 4294967295
   m_Lightmapping: 2
   m_ShadowSamples: 10
-  m_ShadowRadius: .100000001
+  m_ShadowRadius: 1.20000005
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
@@ -51214,7 +51319,7 @@ Transform:
   m_PrefabInternal: {fileID: 1816026143}
   m_GameObject: {fileID: 1565514644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -.109999999, z: 1.07799995}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: .0149999997, y: .0149999997, z: .0149999997}
   m_Children: []
   m_Father: {fileID: 1420767087}
@@ -51228,7 +51333,7 @@ TextMesh:
   m_PrefabInternal: {fileID: 1816026143}
   m_GameObject: {fileID: 1565514644}
   m_Text: Welcome
-  m_OffsetZ: 0
+  m_OffsetZ: 60
   m_CharacterSize: 2
   m_LineSpacing: 1
   m_Anchor: 4
@@ -54996,7 +55101,7 @@ Light:
     m_Bits: 4294967295
   m_Lightmapping: 2
   m_ShadowSamples: 10
-  m_ShadowRadius: .100000001
+  m_ShadowRadius: 1.20000005
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
@@ -56961,11 +57066,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 483084, guid: a2fcfd6550cc8fd4cba2199aaf596e61, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -.109999999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 483084, guid: a2fcfd6550cc8fd4cba2199aaf596e61, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 1.07799995
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 183082, guid: a2fcfd6550cc8fd4cba2199aaf596e61, type: 2}
       propertyPath: m_IsActive
@@ -57010,6 +57115,10 @@ Prefab:
     - target: {fileID: 10283082, guid: a2fcfd6550cc8fd4cba2199aaf596e61, type: 2}
       propertyPath: m_Text
       value: Welcome
+      objectReference: {fileID: 0}
+    - target: {fileID: 10283082, guid: a2fcfd6550cc8fd4cba2199aaf596e61, type: 2}
+      propertyPath: m_OffsetZ
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2fcfd6550cc8fd4cba2199aaf596e61, type: 2}

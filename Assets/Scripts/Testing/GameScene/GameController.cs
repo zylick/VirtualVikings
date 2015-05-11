@@ -107,6 +107,10 @@ public class GameController : MonoBehaviour
 
 		//Testing Win Condition
 		//mInstaWin = true;
+
+		//Start the Tutorial
+		StartCoroutine (StartTutorial ());
+
 	}
 
 	void FixedUpdate ()
@@ -422,7 +426,7 @@ public class GameController : MonoBehaviour
 				else
 				{
 					//Walk to the destination
-					mTimeToWalk /= 3;
+					mTimeToWalk /= 4;
 					iTween.MoveTo (mPlayerObject, iTween.Hash ("x", hit.point.x, "y", mPlayerObject.transform.position.y, "z", hit.point.z, "easeType", "linear", "time", mTimeToWalk));
 				}
 
@@ -771,8 +775,6 @@ public class GameController : MonoBehaviour
 			StartCoroutine(ShowMessage("Book Quest", 5.0f));
 			break;
 		
-		
-
 		default:
 			break;
 		}
@@ -835,26 +837,106 @@ public class GameController : MonoBehaviour
 		yield return new WaitForSeconds (fTime);
 	}
 
-	IEnumerator DelayedSceneLoad()
+	IEnumerator StartTutorial()
 	{
-		//Play You Win!
-		//Show Score
-		yield return new WaitForSeconds(5.0f);
-		StopCoroutine("ShowMessage");
-		int fCalculateScore = 419 - Mathf.FloorToInt (mTimer);
-		string fString = "You Win Score(" + fCalculateScore + ")";
-
 		//Turn on text to put the message
 		mFirstPersonMessage.gameObject.SetActive (true);
 		mThirdPersonMessage.gameObject.SetActive (true);
+
+		//Put the message in the text
+		mFirstPersonMessage.text = "The Maycaster Estate";
+		mThirdPersonMessage.text = "The Maycaster Estate";
+
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+
+		//Put the message in the text
+		mFirstPersonMessage.text = "Two Modes: 1st and 3rd";
+		mThirdPersonMessage.text = "Two Modes: 1st and 3rd";
+
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
 		
 		//Put the message in the text
-		mFirstPersonMessage.text = fString;
-		mThirdPersonMessage.text = fString;
+		mFirstPersonMessage.text = "In 1st Tap to switch";
+		mThirdPersonMessage.text = "In 1st Tap to swtich";
 
-		yield return new WaitForSeconds(5.0f);
-		AsyncOperation async = Application.LoadLevelAsync("Credits");
-		yield return async;
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+
+		//Put the message in the text
+		mFirstPersonMessage.text = "between White Look";
+		mThirdPersonMessage.text = "between White Look";
+		
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+
+		//Put the message in the text
+		mFirstPersonMessage.text = "and Red Interactive";
+		mThirdPersonMessage.text = "and Red Interactive";
+
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+		
+		//Put the message in the text
+		mFirstPersonMessage.text = "Press Back to goto 3rd";
+		mThirdPersonMessage.text = "Press Back to goto 3rd";
+
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+		
+		//Put the message in the text
+		mFirstPersonMessage.text = "In 3rd Tap to move";
+		mThirdPersonMessage.text = "In 3rd Tap to move";
+
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+		
+		//Put the message in the text
+		mFirstPersonMessage.text = "Tap on Arrow to enter 1st";
+		mThirdPersonMessage.text = "Tap on Arrow to enter 1st";
+
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+		
+		//Put the message in the text
+		mFirstPersonMessage.text = "Good Luck";
+		mThirdPersonMessage.text = "Good Luck";
+
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+
+		//Put the message in the text
+		mFirstPersonMessage.text = "One last thing";
+		mThirdPersonMessage.text = "One last thing";
+		
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+
+		//Put the message in the text
+		mFirstPersonMessage.text = "Don't waste time...";
+		mThirdPersonMessage.text = "Don't waste time...";
+
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+		
+		//Put the message in the text
+		mFirstPersonMessage.text = "The Phantom is becomming...";
+		mThirdPersonMessage.text = "The Phantom is becomming...";
+
+		//Wait the requested time
+		yield return new WaitForSeconds (2.5f);
+
+		//Turn off text to hide the message
+		mFirstPersonMessage.gameObject.SetActive (false);
+		mThirdPersonMessage.gameObject.SetActive (false);
+		
+		//Clear the message
+		mFirstPersonMessage.text = "";
+		mThirdPersonMessage.text = "";
+
+		//Start the timer
+		mTutorialMode = false;
 	}
 
 	IEnumerator ShowMessage( string fMessage, float fTime)
@@ -878,30 +960,31 @@ public class GameController : MonoBehaviour
 		mFirstPersonMessage.text = "";
 		mThirdPersonMessage.text = "";
 
+		mTutorialMode = false;
 	}
 
-	/*
-	IEnumerator FinishPastPerson(string fRoom)
+	//If you win
+	IEnumerator DelayedSceneLoad()
 	{
-		//Switch the scene back to regular mode
-
-
-		//Turn off the old film shaders
-		//Enable the shaders on the eyes
-		OldFilmEffect fThisOldFilmEffect = mFirstPersonCam.leftEyeAnchor.GetComponent<OldFilmEffect> ();
-		fThisOldFilmEffect.enabled = false;
+		//Play You Win!
+		//Show Score
+		yield return new WaitForSeconds(5.0f);
+		StopCoroutine("ShowMessage");
+		int fCalculateScore = 419 - Mathf.FloorToInt (mTimer);
+		string fString = "You Win Score(" + fCalculateScore + ")";
 		
-		fThisOldFilmEffect = mFirstPersonCam.rightEyeAnchor.GetComponent<OldFilmEffect> ();
-		fThisOldFilmEffect.enabled = false;
+		//Turn on text to put the message
+		mFirstPersonMessage.gameObject.SetActive (true);
+		mThirdPersonMessage.gameObject.SetActive (true);
 		
-		//Stop the Projector Audio sound effect if it is still playing
-		if( mOldFilmSound.isPlaying )
-			mOldFilmSound.Stop ();
-
-		//Send them back to first person mode
-		ThirdToFirstPerson();
+		//Put the message in the text
+		mFirstPersonMessage.text = fString;
+		mThirdPersonMessage.text = fString;
+		
+		yield return new WaitForSeconds(5.0f);
+		AsyncOperation async = Application.LoadLevelAsync("Credits");
+		yield return async;
 	}
-	*/
 
 	//If you lose
 	IEnumerator GameOver()
@@ -920,12 +1003,17 @@ public class GameController : MonoBehaviour
 		color.a = 0.0f;
 		mPhantomFace.renderer.material.color = color;
 		
-		//Update text message
-		StartCoroutine(ShowMessage("Game Over (Resetting)", 5.0f));
+		//Turn on text to put the message
+		mFirstPersonMessage.gameObject.SetActive (true);
+		mThirdPersonMessage.gameObject.SetActive (true);
+		
+		//Put the message in the text
+		mFirstPersonMessage.text = "Game Over";
+		mThirdPersonMessage.text = "Game Over";
 	
-		yield return new WaitForSeconds(5.0f);
-		AsyncOperation async = Application.LoadLevelAsync("GameMode");
-		yield return async;
+		//yield return new WaitForSeconds(5.0f);
+		//AsyncOperation async = Application.LoadLevelAsync("GameMode");
+		//yield return async;
 	}
 
     //Audio Handlers
